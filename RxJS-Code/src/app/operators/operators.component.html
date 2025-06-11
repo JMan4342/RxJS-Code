@@ -1,14 +1,17 @@
 <div class="container my-4">
   <div class="card">
     <div class="card-body">
-      <span>
-        <h3>One Second Result:</h3>
-        <p>{{ oneSecResult }}</p>
-      </span>
-      <span>
-        <h3>Half Second Result:</h3>
-        <p>{{ halfSecResult }}</p>
-      </span>
+      <div class="row">
+        <h3 class="col text-end">One Second Result: </h3>
+        <p class="col fw-semibold fs-4">{{ oneSecResult }}</p>
+      </div>
+      <div class="row">
+        <h3 class="col text-end">Two Second Result: </h3>
+        <p class="col fw-semibold fs-4">{{ halfSecResult }}</p>
+      </div>
+      <div class="d-flex justify-content-center">
+        <p class="fw-semibold fs-3">{{completeMessage}}</p>
+      </div>
       <div class="d-flex justify-content-center">
           <button [disabled]="isWorking" type="button" class="btn btn-success btn-lg" (click)="startOperators()">Start</button>
       </div>
