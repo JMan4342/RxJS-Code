@@ -1,0 +1,17 @@
+<div class="container my-4">
+  <div class="card">
+    <div class="card-body">
+      <span>
+        <h3>One Second Result:</h3>
+        <p>{{ oneSecResult }}</p>
+      </span>
+      <span>
+        <h3>Half Second Result:</h3>
+        <p>{{ halfSecResult }}</p>
+      </span>
+      <div class="d-flex justify-content-center">
+          <button [disabled]="isWorking" type="button" class="btn btn-success btn-lg" (click)="startOperators()">Start</button>
+      </div>
+    </div>
+  </div>
+</div>
