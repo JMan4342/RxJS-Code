@@ -2,11 +2,14 @@
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-center">
-        <p class="fw-semibold fs-3">{{observableMessage}}</p>
+        <p class="fw-semibold fs-3">{{ observableMessage }}</p>
       </div>
-      <!-- <div class="d-flex justify-content-center">
-          <button [disabled]="isWorking" type="button" class="btn btn-success btn-lg" (click)="startOperators()">Start</button>
-      </div> -->
+      <div class="d-flex justify-content-center">
+        <p class="fw-semibold fs-3">{{ counter }}</p>
+      </div>
+      <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-success btn-lg" (click)="startCounter()">Start Counter</button>
+      </div>
     </div>
   </div>
 </div>

@@ -10,19 +10,46 @@ import { Observable } from 'rxjs';
 })
 export class ObservablesComponent {
   observableMessage: string = '';
+  counter: number = 0;
+
+  counter$ = new Observable<number>;
 
   ngOnInit(): void {
-    const message = new Observable<string>((subscriber) => {
-      subscriber.next('Welcome Everyone To...');
+    const message$ = new Observable<string>((subscriber) => {
+      setTimeout(() => {
+        subscriber.next('Welcome Everyone To...');
+      });
       setTimeout(() => {
         subscriber.next('Observables');
       }, 3000);
     });
 
-    message.subscribe({
+    // setTimeout(() => {
+    // this.observableMessage = 'Start Message'
+    // }, 1000);
+
+    message$.subscribe({
       next: (x) => {
         this.observableMessage = x;
       },
+      error: (err) => console.log('Something went wrong'),
+    });
+    setTimeout(() => {
+      this.observableMessage = 'End Message';
+    }, 2500);
+
+    this.counter$ = new Observable<number>((subscriber) => {
+      setInterval(() => {
+        subscriber.next(this.counter + 1);
+      }, 1500);
+    });
+  }
+
+  startCounter() {
+    this.counter = 0;
+
+    this.counter$.subscribe({
+      next: (x) => this.counter = x,
       error: (err) => console.log('Something went wrong'),
     });
   }
