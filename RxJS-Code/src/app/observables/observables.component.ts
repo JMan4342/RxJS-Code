@@ -12,7 +12,7 @@ export class ObservablesComponent {
   observableMessage: string = '';
   counter: number = 0;
 
-  counter$ = new Observable<number>;
+  counter$ = new Observable<number>();
 
   ngOnInit(): void {
     const message$ = new Observable<string>((subscriber) => {
@@ -48,11 +48,16 @@ export class ObservablesComponent {
   startCounter() {
     this.counter = 0;
 
-    this.counter$.subscribe({
-      next: (x) => this.counter = x,
-      error: (err) => console.log('Something went wrong'),
-    });
-  }
+    const counterObservable = {
+      next: (x: number) => (this.counter = x),
+      error: (err: string) => console.log('Something went wrong: ' + err),
+    };
 
-  
+    // this.counter$.subscribe({
+    //   next: (x) => (this.counter = x),
+    //   error: (err) => console.log('Something went wrong'),
+    // });
+    
+    this.counter$.subscribe(counterObservable);
+  }
 }
