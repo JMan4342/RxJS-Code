@@ -1,19 +1,58 @@
 <div class="container my-4">
   <div class="card">
     <div class="card-body">
+      <h5 class="card-title">BehaviorSubject</h5>
       <div class="row">
-        <h3 class="col text-end">First Subject Call: </h3>
+        <h3 class="col text-end">First Subject Call:</h3>
         <p class="col fw-semibold fs-4">{{ firstCallBS }}</p>
       </div>
       <div class="row">
-        <h3 class="col text-end">Second Subject Call: </h3>
+        <h3 class="col text-end">Second Subject Call:</h3>
         <p class="col fw-semibold fs-4">{{ secondCallBS }}</p>
       </div>
       <!-- <div class="d-flex justify-content-center">
         <p class="fw-semibold fs-3">{{completeMessage}}</p>
       </div> -->
       <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-success btn-lg" (click)="startBehaviorCalls()">Start</button>
+        <button
+          type="button"
+          class="btn btn-success btn-lg"
+          (click)="startBehaviorCalls()"
+        >
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container my-4">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">ReplaySubject</h5>
+      <div class="row">
+        <h3 class="col text-end">First Subject Call:</h3>
+        <p *ngFor="let x of firstCallReplay" class="col fw-semibold fs-4">
+          {{ x }}
+        </p>
+      </div>
+      <div class="row">
+        <h3 class="col text-end">Second Subject Call:</h3>
+        <p *ngFor="let y of secondCallReplay" class="col fw-semibold fs-4">
+          {{ y }}
+        </p>
+      </div>
+      <!-- <div class="d-flex justify-content-center">
+        <p class="fw-semibold fs-3">{{completeMessage}}</p>
+      </div> -->
+      <div class="d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-success btn-lg"
+          (click)="startReplayCall()"
+        >
+          Start
+        </button>
       </div>
     </div>
   </div>
