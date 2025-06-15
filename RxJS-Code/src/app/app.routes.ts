@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { OperatorsComponent } from './operators/operators.component';
 import { ObservablesComponent } from './observables/observables.component';
+import { SubjectComponent } from './subject/subject.component';
 
 export const routes: Routes = [{
     path: '',
@@ -18,6 +19,10 @@ export const routes: Routes = [{
   {
     path: 'operators',
     component: OperatorsComponent,
+  },
+    {
+    path: 'subject',
+    component: SubjectComponent,
   },
   {
     path: '**',

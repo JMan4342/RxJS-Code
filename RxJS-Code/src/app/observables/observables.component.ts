@@ -48,6 +48,7 @@ export class ObservablesComponent {
   startCounter() {
     this.counter = 0;
 
+    // THIS IS THE OBSERVABLE FOR THE COUNTER
     const counterObservable = {
       next: (x: number) => (this.counter = x),
       error: (err: string) => console.log('Something went wrong: ' + err),
@@ -57,7 +58,13 @@ export class ObservablesComponent {
     //   next: (x) => (this.counter = x),
     //   error: (err) => console.log('Something went wrong'),
     // });
-    
-    this.counter$.subscribe(counterObservable);
+
+    // THIS IS THE SUBSCRIPTION FOR THE COUNTER
+    const demoCounter = this.counter$.subscribe(counterObservable);
+
+    setTimeout(() => {
+      demoCounter.unsubscribe();
+      this.observableMessage = 'Counter ended';
+    }, 10000)
   }
 }
