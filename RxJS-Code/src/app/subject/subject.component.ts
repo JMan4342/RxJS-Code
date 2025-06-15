@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AsyncSubject, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-subject',
@@ -10,6 +10,9 @@ import { AsyncSubject, BehaviorSubject, ReplaySubject } from 'rxjs';
   styleUrl: './subject.component.css',
 })
 export class SubjectComponent {
+  firstCallSub: number = 0;
+  secondCallSub: number = 0;
+
   firstCallBS: number = 0;
   secondCallBS: number = 0;
 
@@ -20,6 +23,26 @@ export class SubjectComponent {
   secondCallAsync: number = 0;
   asyncMessage: string = '';
   asyncLoading: boolean = false;
+
+  startSubjectCalls() {
+    const subject = new Subject<number>();
+    let counter = 0;
+
+    subject.subscribe({
+      next: (x) => this.firstCallSub = x,
+    });
+    subject.subscribe({
+      next: (x) => this.secondCallSub = x,
+    });
+
+    setInterval(() => {
+      subject.next(counter++)
+    }, 1000);
+
+    setTimeout(() => {
+      subject.unsubscribe();
+    }, 10000);
+  }
 
   startBehaviorCalls() {
     const subject = new BehaviorSubject(0);
