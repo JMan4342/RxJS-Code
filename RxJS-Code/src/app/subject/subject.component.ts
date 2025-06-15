@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-subject',
@@ -15,6 +15,11 @@ export class SubjectComponent {
 
   firstCallReplay: any = [];
   secondCallReplay: any = [];
+
+  firstCallAsync: number = 0;
+  secondCallAsync: number = 0;
+  asyncMessage: string = '';
+  asyncLoading: boolean = false;
 
   startBehaviorCalls() {
     const subject = new BehaviorSubject(0);
@@ -45,7 +50,6 @@ export class SubjectComponent {
 
   startReplayCall() {
     const subject = new ReplaySubject(3);
-    let counter = 0;
 
     subject.subscribe({
       next: (x) => {
@@ -69,25 +73,36 @@ export class SubjectComponent {
     }, 4000);
 
     subject.next(5);
+  }
 
-    // setTimeout(() => {
-    //   subject.unsubscribe();
-    // }, 10000);
-    // const subject = new ReplaySubject(3); // buffer 3 values for new subscribers
+  startAsyncCall() {
+    const subject = new AsyncSubject<number>();
+    let counter = 0;
+    this.asyncMessage = '';
+    this.asyncLoading = true;
 
-    // subject.subscribe({
-    //   next: (v) => console.log(`observerA: ${v}`),
-    // });
+    subject.subscribe({
+      next: (x) => {
+        this.firstCallAsync = x;
+      },
+    });
 
-    // subject.next(1);
-    // subject.next(2);
-    // subject.next(3);
-    // subject.next(4);
+    setInterval(() => {
+      subject.next(counter++);
+    }, 1000);
 
-    // subject.subscribe({
-    //   next: (v) => console.log(`observerB: ${v}`),
-    // });
+    setTimeout(() => {
+      subject.subscribe({
+        next: (x) => {
+          this.secondCallAsync = x;
+        },
+      });
+    }, 4000);
 
-    // subject.next(5);
+    setTimeout(() => {
+      subject.complete();
+      this.asyncMessage = 'AsyncSubject Complete';
+      this.asyncLoading = false;
+    }, 10000);
   }
 }
