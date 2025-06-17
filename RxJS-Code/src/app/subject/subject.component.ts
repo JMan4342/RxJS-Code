@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AsyncSubject, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-subject',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './subject.component.html',
   styleUrl: './subject.component.css',
 })
@@ -16,8 +17,11 @@ export class SubjectComponent {
   firstCallBS: number = 0;
   secondCallBS: number = 0;
 
-  firstCallReplay: any = [];
-  secondCallReplay: any = [];
+  firstCallReplay: any[] = [];
+  secondCallReplay: any[] = [];
+  firstInputReplay: any[] = [];
+  secondInputReplay: any[] = [];
+  searchInput: string = '';
 
   firstCallAsync: number = 0;
   secondCallAsync: number = 0;
@@ -29,14 +33,14 @@ export class SubjectComponent {
     let counter = 0;
 
     subject.subscribe({
-      next: (x) => this.firstCallSub = x,
+      next: (x) => (this.firstCallSub = x),
     });
     subject.subscribe({
-      next: (x) => this.secondCallSub = x,
+      next: (x) => (this.secondCallSub = x),
     });
 
     setInterval(() => {
-      subject.next(counter++)
+      subject.next(counter++);
     }, 1000);
 
     setTimeout(() => {
@@ -96,6 +100,7 @@ export class SubjectComponent {
     }, 4000);
 
     subject.next(5);
+    subject.next(6);
   }
 
   startAsyncCall() {

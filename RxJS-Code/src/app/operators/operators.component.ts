@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { combineLatest, forkJoin, interval, take } from 'rxjs';
+import { combineLatest, forkJoin, interval, Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-operators',
@@ -14,7 +14,7 @@ export class OperatorsComponent {
   completeMessage: string = '';
   isWorking: boolean = false;
 
-  startOperators() {
+  startOperators(operator: string) {
     this.oneSecResult = null;
     this.halfSecResult = null;
     this.completeMessage = '';
@@ -25,6 +25,18 @@ export class OperatorsComponent {
 
     const takeOneFiveNumbers = oneSecNum.pipe(take(5));
     const takeTwoFiveNumbers = twoSecNum.pipe(take(5));
+
+    if (operator == 'none') {
+      this.noCombineOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
+    };
+
+    if (operator == 'forkJoin') {
+      this.forkJoinOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
+    };
+
+    if (operator == 'combineLatest') {
+      this.combineLatestOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
+    };
 
     // NO OPERATORS DEMONSTRATION
     // takeOneFiveNumbers.subscribe(x => this.oneSecResult = x);
@@ -47,6 +59,42 @@ export class OperatorsComponent {
     // });
 
     // COMBINELATEST DEMONSTRATION
+    // const observable = combineLatest([takeOneFiveNumbers, takeTwoFiveNumbers]);
+    // observable.subscribe({
+    //   next: (value) => {
+    //     this.oneSecResult = value[0];
+    //     this.halfSecResult = value[1];
+    //   },
+    //   complete: () => {
+    //     this.isWorking = false;
+    //     this.completeMessage = 'CombineLatest Operator Completed';
+    //   },
+    // });
+  }
+
+  noCombineOperators(takeOneFiveNumbers: Observable<number>, takeTwoFiveNumbers: Observable<number>) {
+    takeOneFiveNumbers.subscribe(x => this.oneSecResult = x);
+    takeTwoFiveNumbers.subscribe(x => this.halfSecResult = x);
+
+    this.completeMessage = 'No Join Creation Operators Complete';
+    this.isWorking = false;
+  }
+
+  forkJoinOperators(takeOneFiveNumbers: Observable<number>, takeTwoFiveNumbers: Observable<number>) {
+    const observable = forkJoin([takeOneFiveNumbers, takeTwoFiveNumbers]);
+    observable.subscribe({
+      next: (value) => {
+        this.oneSecResult = value[0];
+        this.halfSecResult = value[1];
+      },
+      complete: () => {
+        this.isWorking = false;
+        this.completeMessage = 'Forkjoin Operator Completed';
+      },
+    });
+  }
+
+  combineLatestOperators(takeOneFiveNumbers: Observable<number>, takeTwoFiveNumbers: Observable<number>) {
     const observable = combineLatest([takeOneFiveNumbers, takeTwoFiveNumbers]);
     observable.subscribe({
       next: (value) => {
