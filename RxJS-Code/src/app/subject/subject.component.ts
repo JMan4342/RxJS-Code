@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AsyncSubject, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import {
+  AsyncSubject,
+  BehaviorSubject,
+  of,
+  ReplaySubject,
+  Subject,
+} from 'rxjs';
 
 @Component({
   selector: 'app-subject',
@@ -76,7 +82,7 @@ export class SubjectComponent {
   }
 
   startReplayCall() {
-    const subject = new ReplaySubject(3);
+    const subject = new ReplaySubject(2);
 
     subject.subscribe({
       next: (x) => {
@@ -85,10 +91,26 @@ export class SubjectComponent {
       },
     });
 
-    subject.next(1);
-    subject.next(2);
-    subject.next(3);
-    subject.next(4);
+    setTimeout(() => {
+      subject.next(1);
+    }, 1000);
+    setTimeout(() => {
+      subject.next(2);
+    }, 2000);
+    setTimeout(() => {
+      subject.next(3);
+    }, 3000);
+    setTimeout(() => {
+      subject.next(4);
+    }, 4000);
+    // subject.next(1);
+    // subject.next(2);
+    // subject.next(3);
+    // subject.next(4);
+
+    // of(1, 2, 3, 4).subscribe({
+    //   next: (x) => subject.next(x),
+    // });
 
     setTimeout(() => {
       subject.subscribe({
@@ -99,8 +121,17 @@ export class SubjectComponent {
       });
     }, 4000);
 
-    subject.next(5);
-    subject.next(6);
+    setTimeout(() => {
+      subject.next(5);
+    }, 5000);
+    setTimeout(() => {
+      subject.next(6);
+    }, 6000);
+    // subject.next(5);
+    // subject.next(6);
+    // of(5, 6).subscribe({
+    //   next: (x) => subject.next(x),
+    // });
   }
 
   startAsyncCall() {

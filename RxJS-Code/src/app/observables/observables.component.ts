@@ -15,6 +15,8 @@ export class ObservablesComponent {
   counter$ = new Observable<number>();
 
   ngOnInit(): void {
+
+    // OBSERVABLE BEING CREATED
     const message$ = new Observable<string>((subscriber) => {
       setTimeout(() => {
         subscriber.next('Welcome Everyone To...');
@@ -28,39 +30,38 @@ export class ObservablesComponent {
     // this.observableMessage = 'Start Message'
     // }, 1000);
 
+    // OBSERVABLE BEING SUBSCRIBED AND EXECUTED
     message$.subscribe({
       next: (x) => {
         this.observableMessage = x;
       },
       error: (err) => console.log('Something went wrong'),
     });
-    setTimeout(() => {
-      this.observableMessage = 'End Message';
-    }, 2500);
 
-    this.counter$ = new Observable<number>((subscriber) => {
-      setInterval(() => {
-        subscriber.next(this.counter + 1);
-      }, 1500);
-    });
+    // setTimeout(() => {
+    //   this.observableMessage = 'End Message';
+    // }, 2500);
+
   }
 
   startCounter() {
     this.counter = 0;
 
     // THIS IS THE OBSERVABLE FOR THE COUNTER
-    const counterObservable = {
+    this.counter$ = new Observable<number>((subscriber) => {
+      setInterval(() => {
+        subscriber.next(this.counter + 1);
+      }, 1500);
+    });
+
+    // THIS IS THE OBSERVER FOR THE COUNTER
+    const counterObserer = {
       next: (x: number) => (this.counter = x),
       error: (err: string) => console.log('Something went wrong: ' + err),
     };
 
-    // this.counter$.subscribe({
-    //   next: (x) => (this.counter = x),
-    //   error: (err) => console.log('Something went wrong'),
-    // });
-
     // THIS IS THE SUBSCRIPTION FOR THE COUNTER
-    const demoCounter = this.counter$.subscribe(counterObservable);
+    const demoCounter = this.counter$.subscribe(counterObserer);
 
     setTimeout(() => {
       demoCounter.unsubscribe();
