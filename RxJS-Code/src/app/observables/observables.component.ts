@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class ObservablesComponent {
   observableMessage: string = '';
   counter: number = 0;
+  counter2: number = 0;
 
   counter$ = new Observable<number>();
 
@@ -32,8 +33,8 @@ export class ObservablesComponent {
 
     // OBSERVABLE BEING SUBSCRIBED AND EXECUTED
     message$.subscribe({
-      next: (x) => {
-        this.observableMessage = x;
+      next: (returnedVal) => {
+        this.observableMessage = returnedVal;
       },
       error: (err) => console.log('Something went wrong'),
     });
@@ -46,6 +47,7 @@ export class ObservablesComponent {
 
   startCounter() {
     this.counter = 0;
+    this.counter2 = 0;
 
     // THIS IS THE OBSERVABLE FOR THE COUNTER
     this.counter$ = new Observable<number>((subscriber) => {
@@ -60,8 +62,15 @@ export class ObservablesComponent {
       error: (err: string) => console.log('Something went wrong: ' + err),
     };
 
+    // const counterObserver2 = {
+    //   next: (x: number) => (this.counter2 = x + 1),
+    //   error: (err: string) => console.log('Something went wrong: ' + err),
+    //   complete: () => console.log('Observer got a complete notification'),
+    // }
+
     // THIS IS THE SUBSCRIPTION FOR THE COUNTER
     const demoCounter = this.counter$.subscribe(counterObserer);
+    // const demoCounter2 = this.counter$.subscribe(counterObserver2);
 
     setTimeout(() => {
       demoCounter.unsubscribe();

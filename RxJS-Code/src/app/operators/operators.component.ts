@@ -1,5 +1,14 @@
 import { Component } from '@angular/core';
-import { combineLatest, forkJoin, interval, Observable, take } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  forkJoin,
+  interval,
+  map,
+  Observable,
+  of,
+  take,
+} from 'rxjs';
 
 @Component({
   selector: 'app-operators',
@@ -13,6 +22,27 @@ export class OperatorsComponent {
   halfSecResult: number | null = null;
   completeMessage: string = '';
   isWorking: boolean = false;
+
+  ngOnInit(): void {
+    of(1, 2, 3, 4, 5)
+      .pipe(
+        map((n) => {
+          if (n == 4) {
+            throw 'Four';
+          }
+          return n;
+        }),
+        catchError((err) => {
+          throw 'error in source. Require number. Details: ' + err;
+        })
+      )
+      .subscribe({
+        next: (returnedVal) => {
+          console.log(returnedVal);
+        },
+        error: (err) => console.log('Something went wrong.' + err),
+      });
+  }
 
   startOperators(operator: string) {
     this.oneSecResult = null;
@@ -28,15 +58,15 @@ export class OperatorsComponent {
 
     if (operator == 'none') {
       this.noCombineOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
-    };
+    }
 
     if (operator == 'forkJoin') {
       this.forkJoinOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
-    };
+    }
 
     if (operator == 'combineLatest') {
       this.combineLatestOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
-    };
+    }
 
     // NO OPERATORS DEMONSTRATION
     // takeOneFiveNumbers.subscribe(x => this.oneSecResult = x);
@@ -72,15 +102,21 @@ export class OperatorsComponent {
     // });
   }
 
-  noCombineOperators(takeOneFiveNumbers: Observable<number>, takeTwoFiveNumbers: Observable<number>) {
-    takeOneFiveNumbers.subscribe(x => this.oneSecResult = x);
-    takeTwoFiveNumbers.subscribe(x => this.halfSecResult = x);
+  noCombineOperators(
+    takeOneFiveNumbers: Observable<number>,
+    takeTwoFiveNumbers: Observable<number>
+  ) {
+    takeOneFiveNumbers.subscribe((x) => (this.oneSecResult = x));
+    takeTwoFiveNumbers.subscribe((x) => (this.halfSecResult = x));
 
     this.completeMessage = 'No Join Creation Operators Complete';
     this.isWorking = false;
   }
 
-  forkJoinOperators(takeOneFiveNumbers: Observable<number>, takeTwoFiveNumbers: Observable<number>) {
+  forkJoinOperators(
+    takeOneFiveNumbers: Observable<number>,
+    takeTwoFiveNumbers: Observable<number>
+  ) {
     const observable = forkJoin([takeOneFiveNumbers, takeTwoFiveNumbers]);
     observable.subscribe({
       next: (value) => {
@@ -94,7 +130,10 @@ export class OperatorsComponent {
     });
   }
 
-  combineLatestOperators(takeOneFiveNumbers: Observable<number>, takeTwoFiveNumbers: Observable<number>) {
+  combineLatestOperators(
+    takeOneFiveNumbers: Observable<number>,
+    takeTwoFiveNumbers: Observable<number>
+  ) {
     const observable = combineLatest([takeOneFiveNumbers, takeTwoFiveNumbers]);
     observable.subscribe({
       next: (value) => {

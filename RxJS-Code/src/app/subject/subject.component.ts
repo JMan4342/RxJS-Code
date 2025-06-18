@@ -66,7 +66,7 @@ export class SubjectComponent {
 
     setInterval(() => {
       subject.next(counter++);
-    }, 1000);
+    }, 1500);
 
     setTimeout(() => {
       subject.subscribe({
@@ -74,11 +74,11 @@ export class SubjectComponent {
           this.secondCallBS = x;
         },
       });
-    }, 4000);
+    }, 6000);
 
     setTimeout(() => {
       subject.unsubscribe();
-    }, 10000);
+    }, 12000);
   }
 
   startReplayCall() {
@@ -93,16 +93,16 @@ export class SubjectComponent {
 
     setTimeout(() => {
       subject.next(1);
-    }, 1000);
+    }, 1500);
     setTimeout(() => {
       subject.next(2);
-    }, 2000);
-    setTimeout(() => {
-      subject.next(3);
     }, 3000);
     setTimeout(() => {
+      subject.next(3);
+    }, 4500);
+    setTimeout(() => {
       subject.next(4);
-    }, 4000);
+    }, 6000);
     // subject.next(1);
     // subject.next(2);
     // subject.next(3);
@@ -119,14 +119,14 @@ export class SubjectComponent {
           console.log(this.secondCallReplay);
         },
       });
-    }, 4000);
+    }, 7000);
 
     setTimeout(() => {
       subject.next(5);
-    }, 5000);
+    }, 7500);
     setTimeout(() => {
       subject.next(6);
-    }, 6000);
+    }, 9000);
     // subject.next(5);
     // subject.next(6);
     // of(5, 6).subscribe({

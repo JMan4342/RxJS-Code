@@ -15,7 +15,12 @@ export class SchedulerComponent {
       observer.next(2);
       observer.next(3);
       observer.complete();
-    }).pipe(observeOn(queueScheduler));
+    })
+    // .pipe(observeOn(null));
+    // .pipe(observeOn(queueScheduler));
+    // .pipe(observeOn(asapScheduler));
+    .pipe(observeOn(asyncScheduler));
+
 
     console.log('just before subscribe');
     observable.subscribe({
