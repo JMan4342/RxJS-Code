@@ -27,10 +27,6 @@ export class ObservablesComponent {
       }, 3000);
     });
 
-    // setTimeout(() => {
-    // this.observableMessage = 'Start Message'
-    // }, 1000);
-
     // OBSERVABLE BEING SUBSCRIBED AND EXECUTED
     message$.subscribe({
       next: (returnedVal) => {
@@ -38,10 +34,6 @@ export class ObservablesComponent {
       },
       error: (err) => console.log('Something went wrong'),
     });
-
-    // setTimeout(() => {
-    //   this.observableMessage = 'End Message';
-    // }, 2500);
 
   }
 
@@ -62,18 +54,18 @@ export class ObservablesComponent {
       error: (err: string) => console.log('Something went wrong: ' + err),
     };
 
-    // const counterObserver2 = {
-    //   next: (x: number) => (this.counter2 = x + 1),
-    //   error: (err: string) => console.log('Something went wrong: ' + err),
-    //   complete: () => console.log('Observer got a complete notification'),
-    // }
+    const counterObserver2 = {
+      next: (x: number) => (this.counter2 = x + 1),
+      error: (err: string) => console.log('Something went wrong: ' + err),
+      complete: () => console.log('Observer got a complete notification'),
+    }
 
     // THIS IS THE SUBSCRIPTION FOR THE COUNTER
     const demoCounter = this.counter$.subscribe(counterObserer);
-    // const demoCounter2 = this.counter$.subscribe(counterObserver2);
+    const demoCounter2 = this.counter$.subscribe(counterObserver2);
 
     setTimeout(() => {
-      demoCounter.unsubscribe();
+      demoCounter2.unsubscribe();
       this.observableMessage = 'Counter ended';
     }, 10000)
   }

@@ -103,14 +103,6 @@ export class SubjectComponent {
     setTimeout(() => {
       subject.next(4);
     }, 6000);
-    // subject.next(1);
-    // subject.next(2);
-    // subject.next(3);
-    // subject.next(4);
-
-    // of(1, 2, 3, 4).subscribe({
-    //   next: (x) => subject.next(x),
-    // });
 
     setTimeout(() => {
       subject.subscribe({
@@ -127,11 +119,6 @@ export class SubjectComponent {
     setTimeout(() => {
       subject.next(6);
     }, 9000);
-    // subject.next(5);
-    // subject.next(6);
-    // of(5, 6).subscribe({
-    //   next: (x) => subject.next(x),
-    // });
   }
 
   startAsyncCall() {

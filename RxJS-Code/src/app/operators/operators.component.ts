@@ -68,38 +68,6 @@ export class OperatorsComponent {
       this.combineLatestOperators(takeOneFiveNumbers, takeTwoFiveNumbers);
     }
 
-    // NO OPERATORS DEMONSTRATION
-    // takeOneFiveNumbers.subscribe(x => this.oneSecResult = x);
-    // takeTwoFiveNumbers.subscribe(x => this.halfSecResult = x);
-
-    // this.completeMessage = 'No Join Creation Operators Complete';
-    // this.isWorking = false;
-
-    // FORKJOIN DEMONSTRATION
-    // const observable = forkJoin([takeOneFiveNumbers, takeTwoFiveNumbers]);
-    // observable.subscribe({
-    //   next: (value) => {
-    //     this.oneSecResult = value[0];
-    //     this.halfSecResult = value[1];
-    //   },
-    //   complete: () => {
-    //     this.isWorking = false;
-    //     this.completeMessage = 'Forkjoin Operator Completed';
-    //   },
-    // });
-
-    // COMBINELATEST DEMONSTRATION
-    // const observable = combineLatest([takeOneFiveNumbers, takeTwoFiveNumbers]);
-    // observable.subscribe({
-    //   next: (value) => {
-    //     this.oneSecResult = value[0];
-    //     this.halfSecResult = value[1];
-    //   },
-    //   complete: () => {
-    //     this.isWorking = false;
-    //     this.completeMessage = 'CombineLatest Operator Completed';
-    //   },
-    // });
   }
 
   noCombineOperators(
